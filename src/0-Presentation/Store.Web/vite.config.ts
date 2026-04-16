@@ -1,10 +1,22 @@
-import { defineConfig } from 'vite';
-import plugin from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'
+import react, { reactCompilerPreset } from '@vitejs/plugin-react'
+import babel from '@rolldown/plugin-babel'
+import path from 'path'
 
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
-    plugins: [plugin()],
-    server: {
-        port: 55541,
+  plugins: [
+    react(),
+    babel({ presets: [reactCompilerPreset()] })
+  ],
+  server: {
+    port: 8080, 
+    strictPort: true, 
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src')
     }
+  },
+  envDir: path.resolve(__dirname, './env'),
 })
