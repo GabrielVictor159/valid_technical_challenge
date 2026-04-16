@@ -90,7 +90,6 @@ public class OrderQueryTests : IntegrationTestBase
         var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
         var response = Assert.IsType<PagedResponse<SearchOrderResponse>>(okResult.Value);
 
-        // O seed gerou exatamente 2 pedidos com ABC
         Assert.Equal(2, response.TotalCount);
         Assert.All(response.Items, x => Assert.Contains("ABC", x.NumberOrder));
     }
@@ -110,7 +109,6 @@ public class OrderQueryTests : IntegrationTestBase
         var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
         var response = Assert.IsType<PagedResponse<SearchOrderResponse>>(okResult.Value);
 
-        // Total de 3 pedidos gerados no seed
         Assert.Equal(3, response.TotalCount);
     }
 }

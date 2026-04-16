@@ -45,7 +45,6 @@ public class ProcessOrderCommandHandler : ICommandHandler<ProcessOrderCommand>
 
             _logger.LogInformation("Iniciando fluxo de processamento do pedido {OrderId} ", request.OrderId);
 
-            //logica de calculo de imposto
             order.TotalPrice *= 1.27m;
             order.Status = Domain.Enums.OrderStatusEnum.PROCESSADO;
             order.Operations.Add(new Domain.Entities.Operation()
