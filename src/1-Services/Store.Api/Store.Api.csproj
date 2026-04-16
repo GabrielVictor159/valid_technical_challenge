@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>738a70a8-5e49-42a1-8223-fd94c656785d</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.26" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\2-Application\Store.Application.Abstractions\Store.Application.Abstractions.csproj" />
+    <ProjectReference Include="..\..\2-Application\Store.Application\Store.Application.csproj" />
+    <ProjectReference Include="..\..\3-Infra\Store.Infraestructure.Data\Store.Infraestructure.Data.csproj" />
+    <ProjectReference Include="..\..\3-Infra\Store.Infraestructure.Messaging\Store.Infraestructure.Messaging.csproj" />
+  </ItemGroup>
+
+</Project>

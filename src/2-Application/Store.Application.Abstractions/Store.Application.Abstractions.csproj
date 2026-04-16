@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\4-Domain\Store.Domain\Store.Domain.csproj" />
+	<PackageReference Include="Rebus.RabbitMq" Version="10.1.1" />
+	<PackageReference Include="Rebus.ServiceProvider" Version="10.7.2" />
+  </ItemGroup>
+
+</Project>

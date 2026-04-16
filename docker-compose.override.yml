@@ -1,0 +1,80 @@
+services:
+  store.web:
+    ports:
+      - "3000:55541"
+    volumes:
+      - ./src/0-Presentation/Store.Web:/app
+      - store_web_node_modules:/app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8080
+      - VITE_KEYCLOAK_URL=http://localhost:8081
+    depends_on:
+      - store.api
+
+  store.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - Keycloak__Authority=http://keycloak:8080/realms/store-realm
+      - Keycloak__Audience=account
+      - Keycloak__RequireHttpsMetadata=false
+      - ConnectionStrings__DefaultConnection=Host=db;Database=storedb;Username=postgres;Password=123
+      - RabbitMq__Host=rabbitmq
+      - RabbitMq__Username=guest
+      - RabbitMq__Password=guest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - rabbitmq
+      - keycloak
+
+  store.worker:
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Database=storedb;Username=postgres;Password=123
+      - RabbitMq__Host=rabbitmq
+      - RabbitMq__Username=guest
+      - RabbitMq__Password=guest
+    depends_on:
+      - db
+      - rabbitmq
+
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=storedb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    command: start-dev --import-realm
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_HOSTNAME_STRICT=false
+      - KC_HTTP_ENABLED=true
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./keycloak-config:/opt/keycloak/data/import
+      - keycloak_data:/opt/keycloak/data 
+
+volumes:
+  postgres_data:
+  rabbitmq_data:
+  keycloak_data:
+  store_web_node_modules:

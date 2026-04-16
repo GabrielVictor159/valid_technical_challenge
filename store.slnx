@@ -1,0 +1,31 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="docker-compose.dcproj">
+      <Build />
+    </Project>
+  </Folder>
+  <Folder Name="/src/0-Presentation/">
+    <Project Path="src/0-Presentation/Store.Web/store.web.esproj" DisplayName="Store.Web">
+      <Build />
+      <Deploy />
+    </Project>
+  </Folder>
+  <Folder Name="/src/1-Services/">
+    <Project Path="src/1-Services/Store.Api/Store.Api.csproj" />
+    <Project Path="src/1-Services/Store.Worker/Store.Worker.csproj" />
+  </Folder>
+  <Folder Name="/src/2-Application/">
+    <Project Path="src/2-Application/Store.Application.Abstractions/Store.Application.Abstractions.csproj" />
+    <Project Path="src/2-Application/Store.Application/Store.Application.csproj" Id="81dc02f0-2d84-4b6b-84e6-6c4e8cbc7bf9" />
+  </Folder>
+  <Folder Name="/src/3-Infra/">
+    <Project Path="src/3-Infra/Store.Infraestructure.Data/Store.Infraestructure.Data.csproj" Id="4c652f27-dd56-4d8d-a603-e08f50909af8" />
+    <Project Path="src/3-Infra/Store.Infraestructure.Messaging/Store.Infraestructure.Messaging.csproj" Id="692477f8-fe93-4b77-a62b-5db7fea6eacb" />
+  </Folder>
+  <Folder Name="/src/4-Domain/">
+    <Project Path="src/4-Domain/Store.Domain/Store.Domain.csproj" Id="51bde0e5-9dfc-49bd-9192-1f976b984d3b" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/Store.Tests/Store.Tests.csproj" />
+  </Folder>
+</Solution>

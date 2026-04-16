@@ -1,0 +1,29 @@
+{
+  "realm": "store-realm",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "store-api",
+      "enabled": true,
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "webOrigins": ["*"]
+    }
+  ],
+  "users": [
+    {
+      "username": "usuario_teste",
+      "enabled": true,
+      "email": "teste@store.com",
+      "firstName": "Usuario",
+      "lastName": "Teste",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "123456",
+          "temporary": false
+        }
+      ]
+    }
+  ]
+}

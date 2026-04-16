@@ -1,0 +1,19 @@
+services:
+  store.web:
+    image: ${DOCKER_REGISTRY-}storeweb
+    build:
+      context: src
+      dockerfile: 0-Presentation/Store.Web/Dockerfile
+
+  store.api:
+    image: ${DOCKER_REGISTRY-}storeapi
+    build:
+      context: src
+      dockerfile: 1-Services/Store.Api/Dockerfile
+
+  store.worker:
+    image: ${DOCKER_REGISTRY-}storeworker
+    build:
+      context: src
+      dockerfile: 1-Services/Store.Worker/Dockerfile
+
