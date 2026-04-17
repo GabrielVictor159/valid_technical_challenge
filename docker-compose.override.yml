@@ -30,9 +30,12 @@ services:
     ports:
       - "8181:8080"
     depends_on:
-      - db
-      - rabbitmq
-      - keycloak
+      keycloak:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+      db:
+        condition: service_started
 
   store.worker:
     environment:
