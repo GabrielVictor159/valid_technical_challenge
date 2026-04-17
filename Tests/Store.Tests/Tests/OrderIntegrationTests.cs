@@ -22,6 +22,7 @@ public class OrderIntegrationTests : IntegrationTestBase
         _orderRequestFaker = new Faker<CreateOrderRequest>()
             .CustomInstantiator(f => new CreateOrderRequest(
                 f.Commerce.Ean13(),
+                f.Name.Random.String(),
                 f.Finance.Amount(10, 1000)
             ));
     }

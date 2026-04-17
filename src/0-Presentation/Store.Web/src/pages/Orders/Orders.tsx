@@ -1,6 +1,6 @@
-import NavLayout from "@/components/NavLayout";
-import OrdersTable from "@/components/OrdersTable";
-import PageHeader from "@/components/PageHeader";
+import NavLayout from "@/components/NavLayout/NavLayout";
+import OrdersTable from "@/components/OrdersTable/OrdersTable";
+import PageHeader from "@/components/PageHeader/PageHeader";
 
 export default function Orders() {
   return (

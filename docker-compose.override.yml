@@ -6,24 +6,29 @@ services:
       - ./src/0-Presentation/Store.Web:/app
       - store_web_node_modules:/app/node_modules
     environment:
-      - VITE_API_URL=http://localhost:8080
-      - VITE_KEYCLOAK_URL=http://localhost:8081
+      - VITE_KEYCLOAK_URL=http://localhost:8182/auth
+      - VITE_KEYCLOAK_REALM=store-realm
+      - VITE_KEYCLOAK_CLIENT_ID=store-api
+      - VITE_API_URL=http://localhost:8181/
     depends_on:
-      - store.api
+      keycloak:
+        condition: service_healthy
+      store.api:
+        condition: service_started
 
   store.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - Keycloak__Authority=http://keycloak:8080/realms/store-realm
+      - Keycloak__Authority=http://keycloak:8080/auth/realms/store-realm
       - Keycloak__Audience=account
       - Keycloak__RequireHttpsMetadata=false
-      - ConnectionStrings__DefaultConnection=Host=db;Database=storedb;Username=postgres;Password=123
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=storedb;Username=postgres;Password=123
       - RabbitMq__Host=rabbitmq
       - RabbitMq__Username=guest
       - RabbitMq__Password=guest
     ports:
-      - "8080:8080"
+      - "8181:8080"
     depends_on:
       - db
       - rabbitmq
@@ -32,7 +37,7 @@ services:
   store.worker:
     environment:
       - DOTNET_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=db;Database=storedb;Username=postgres;Password=123
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=storedb;Username=postgres;Password=123;Maximum Pool Size=100
       - RabbitMq__Host=rabbitmq
       - RabbitMq__Username=guest
       - RabbitMq__Password=guest
@@ -47,7 +52,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=123
     ports:
-      - "5432:5432"
+      - "5445:5432"
     volumes:
       - postgres_data:/var/lib/postgresql
 
@@ -67,8 +72,16 @@ services:
       - KEYCLOAK_ADMIN_PASSWORD=admin
       - KC_HOSTNAME_STRICT=false
       - KC_HTTP_ENABLED=true
+      - KC_HTTP_RELATIVE_PATH=/auth 
+      - KC_HEALTH_ENABLED=true
     ports:
-      - "8081:8080"
+      - "8182:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 10s bash -c ':> /dev/tcp/127.0.0.1/8080' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
     volumes:
       - ./keycloak-config:/opt/keycloak/data/import
       - keycloak_data:/opt/keycloak/data 

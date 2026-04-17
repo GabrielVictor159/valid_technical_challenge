@@ -10,7 +10,7 @@ builder.Services.AddApplication();
 
 builder.Services.AddInfrastructureData(builder.Configuration);
 builder.Services.AddConsumers(builder.Configuration);
-builder.Services.AddInfrastructureMessaging(builder.Configuration);
+builder.Services.AddInfrastructureMessaging(builder.Configuration, isWorker: true);
 builder.Services.AddApplication();
 
 var host = builder.Build();

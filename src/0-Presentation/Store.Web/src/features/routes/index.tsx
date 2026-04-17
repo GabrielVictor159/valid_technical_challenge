@@ -1,5 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
-import Home from "@/pages/Home/Home";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Orders from "@/pages/Orders/Orders";
 import OrdersDetails from "@/pages/OrderDetails/OrderDetails";
 import { ProtectedRoute } from "./ProtectedRoute";
@@ -7,13 +6,8 @@ import CreateOrder from "@/pages/CreateOrder/CreateOrder";
 
 export const router = createBrowserRouter([
   {
-    element: <ProtectedRoute />, 
-    children: [
-      {
-        path: '/',
-        element: <Home />
-      },
-    ]
+    path: "/",
+    element: <Navigate to="/create-order" replace />
   },
   {
     element: <ProtectedRoute />, 

@@ -1,0 +1,9 @@
+.btn-outline-primary:hover .icon-search {
+  filter: brightness(0) invert(1);
+}
+
+.icon-search {
+  transition: filter 0.3s ease;
+  width: 16px; 
+  height: 16px;
+}

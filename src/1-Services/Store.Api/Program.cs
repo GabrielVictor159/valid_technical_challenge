@@ -4,12 +4,21 @@ using Store.Api.Middlewares;
 using Store.Application.Extensions;
 using Store.Infraestructure.Data.Extensions;
 using Store.Infraestructure.Messaging.Extensions;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -43,18 +52,20 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddKeycloakAuthentication(builder.Configuration);
 builder.Services.AddInfrastructureData(builder.Configuration);
-builder.Services.AddInfrastructureMessaging(builder.Configuration);
+builder.Services.AddInfrastructureMessaging(builder.Configuration,isWorker:false);
 builder.Services.AddApplication();
 
 var app = builder.Build();
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
-
 app.UseSwagger();
 app.UseSwaggerUI();
 app.ApplyMigrations();
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
+
 app.UseAuthentication();
 app.UseAuthorization();
 

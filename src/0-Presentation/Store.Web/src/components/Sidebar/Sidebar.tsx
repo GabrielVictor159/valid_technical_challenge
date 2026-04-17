@@ -25,9 +25,9 @@ export default function Sidebar({ collapsed, toggle }: SidebarProps) {
         type="button"
         className="btn btn-sm btn-light mb-3"
         onClick={toggle}
-        >
-        {collapsed ? "➡️" : "⬅️"}
-        </button>
+      >
+        <img src={collapsed ? '/caret-right-square-fill.svg' : '/caret-left-square-fill.svg'} />
+      </button>
 
       {!collapsed && <h4 className="text-white">Loja</h4>}
       <hr />
@@ -38,7 +38,10 @@ export default function Sidebar({ collapsed, toggle }: SidebarProps) {
             to="/orders"
             className={`nav-link text-white d-flex align-items-center ${isActive("/orders")}`}
           >
-            <span>📋</span>
+            <img
+              src="/clipboard2-data-fill.svg"
+              style={{ filter: 'brightness(0) invert(1)' }}
+            />
             {!collapsed && <span className="ms-2">Pedidos</span>}
           </Link>
         </li>
@@ -48,7 +51,9 @@ export default function Sidebar({ collapsed, toggle }: SidebarProps) {
             to="/create-order"
             className={`nav-link text-white d-flex align-items-center ${isActive("/create-order")}`}
           >
-            <span>📝</span>
+            <img
+              src="clipboard2-plus-fill.svg"
+              style={{ filter: 'brightness(0) invert(1)' }} />
             {!collapsed && <span className="ms-2">Criar Pedidos</span>}
           </Link>
         </li>

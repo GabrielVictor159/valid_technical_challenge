@@ -4,4 +4,4 @@ using Store.Application.Abstractions.Interfaces.Commands;
 
 namespace Store.Application.Commands.Order.CreateOrder;
 
-public record CreateOrderCommand(string NumberOrder, decimal TotalPrice, UserSession? User) : ICommand<CreateOrderResponse>;
+public record CreateOrderCommand(string NumberOrder, string Client, decimal TotalPrice, UserSession? User) : ICommand<CreateOrderResponse>;
